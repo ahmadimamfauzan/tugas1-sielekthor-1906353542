@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar(barang)"></nav>
+
+<div class="container">
+    <br>
+    <h2 class="text-center">Form Tambah Barang</h2>
+    <div class="card m-4 p-4 bg-light mx-auto" style="width: 40rem;">
+        <div class="card-body">
+            <div class="justify-content-center">
+                <form th:action="@{/barang/tambah}" th:object="${barang}" method="POST">
+                    Nama Barang <br>
+                    <input required class="form-control" type="text" name="namaBarang" />
+                    <br>
+
+                    Kode Barang <br>
+                    <input required class="form-control" type="text" name="kodeBarang" />
+                    <br>
+
+                    Merk Barang <br>
+                    <input required class="form-control" type="text" name="merkBarang" />
+                    <br>
+
+                    Stok Barang <br>
+                    <input required min="0" class="form-control" type="number" name="stokBarang" />
+                    <br>
+
+                    Garansi Toko <br>
+                    <input required min="0" class="form-control" type="number" name="jumlahGaransiBarang" />
+                    <br>
+
+                    Deskripsi <br>
+                    <input required class="form-control" type="text" name="deskripsiBarang" />
+                    <br>
+
+                    Tipe <br>
+                    <select name="tipe" class="form-select custom-select" th:field="${barang.tipe}">
+                        <option th:each="tipe : ${listTipe}" th:value="${tipe.idTipe}" th:text="${tipe.namaTipe}"></option>
+                    </select>
+                    <br><br>
+
+                    Harga <br>
+                    <input required min="0" class="form-control" type="number" name="hargaBarang" />
+                    <br>
+
+                    <button class="btn btn-warning float-right" style="margin-left: 20px;" type="submit">Simpan</button>
+                    <a class="btn btn-outline-warning text-warning float-right bg-white" href="/barang">Batal</a>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

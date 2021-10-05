@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar(home)"></nav>
+
+<div class="d-flex justify-content-center">
+    <div class="m-4">
+        <br><br><br><br>
+        <div class="d-flex justify-content-center bg-warning" style="color: white;border-radius: 16px;">
+            <h3 style="margin-left: 40px;margin-right: 40px;margin-top: 54px;margin-bottom: 54px;">
+                WELCOME TO SIELEKTHOR
+            </h3>
+        </div>
+        <br>
+        <div class="d-flex justify-content-center text-warning">
+            <h5>List of Features:</h5>
+        </div>
+
+        <div class="my-3 d-flex justify-content-center">
+            <a th:href="@{/barang}" class="mx-3 btn btn-warning font-weight-bold" style="padding-left: 40px;padding-right: 40px;border-radius: 12px;">Barang</a>
+            <a th:href="@{/pembelian}" class="mx-3 btn btn-warning font-weight-bold" style="padding-left: 40px;padding-right: 40px;border-radius: 12px;">Pembelian</a>
+            <a th:href="@{/filter-pembelian}" class="mx-3 btn btn-warning font-weight-bold" style="padding-left: 40px;padding-right: 40px;border-radius: 12px;">Filter Pembelian</a>
+        </div>
+
+    </div>
+</div>
+
+</body>
+
+</html>
