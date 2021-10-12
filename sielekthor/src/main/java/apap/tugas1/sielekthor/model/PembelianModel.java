@@ -6,63 +6,57 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-
+import java.sql.Date;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter @Getter
 @Entity
-@Table(name = "barang")
-public class BarangModel implements Serializable {
+@Table(name = "pembelian")
+public class PembelianModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idBarang;
+    private Long idPembelian;
+
+    @NotNull
+    @Column(nullable = false)
+    private int totalPembelian;
+
+    @NotNull
+    @Column(nullable = false)
+    //@DateTimeFormat(pattern = "YYYY-MM-DD")
+    private LocalDateTime tanggalPembelian;
 
     @NotNull
     @Size(max=255)
     @Column(nullable = false)
-    private String namaBarang;
-
-    @NotNull
-    @Column(nullable = false)
-    private int stokBarang;
-
-    @NotNull
-    @Column(nullable = false)
-    private int jumlahGaransiBarang;
+    private String namaAdminPembelian;
 
     @NotNull
     @Size(max=255)
-    @Column(nullable = false)
-    private String deskripsiBarang;
-
-    @NotNull
-    @Size(max=255)
-    @Column(nullable = false)
-    private String kodeBarang;
-
-    @NotNull
-    @Size(max=255)
-    @Column(nullable = false)
-    private String merkBarang;
+    @Column(nullable = false, unique = true)
+    private String noInvoicePembelian;
 
     @NotNull
     @Column(nullable = false)
-    private int hargaBarang;
+    private boolean isCashPembelian;
 
-    //Relasi dengan TipeModel
+    //Relasi dengan Member
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "id_tipe", referencedColumnName = "idTipe", nullable = false)
+    @JoinColumn(name = "id_member", referencedColumnName = "idMember", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private TipeModel tipe;
+    private MemberModel idMember;
 
     //Relasi dengan PembelianBarangModel
-    @OneToMany(mappedBy = "idBarang", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "idPembelian", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<PembelianBarangModel> listPembelianBarang;
 }
