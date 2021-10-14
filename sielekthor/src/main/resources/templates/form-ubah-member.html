@@ -17,12 +17,14 @@
         <div class="card-body">
             <div class="justify-content-center">
                 <form th:action="@{/member/tambah}" th:object="${member}" method="POST">
+                    <input type="hidden" th:field="*{idMember}" />
+
                     Nama <br>
-                    <input required class="form-control" type="text" name="namaMember" />
+                    <input required class="form-control" type="text" name="namaMember" th:value="*{namaMember}"/>
                     <br>
 
                     Tanggal Lahir <br>
-                    <input required class="form-control" type="date" name="tanggalLahirMember" />
+                    <input required class="form-control" type="date" name="tanggalLahirMember" th/>
                     <br>
 
                     Tanggal Pendaftaran <br>
@@ -30,8 +32,8 @@
                     <br>
 
                     Jenis Kelamin <br>
-<!--                    <label><input required class="form-control" type="checkbox" name="jenisKelaminMember" value ="0"/>Perempuan</label>-->
-<!--                    <label><input required class="form-control" type="checkbox" name="jenisKelaminMember" value ="1"/>Laki-Laki</label>-->
+                    <!--                    <label><input required class="form-control" type="checkbox" name="jenisKelaminMember" value ="0"/>Perempuan</label>-->
+                    <!--                    <label><input required class="form-control" type="checkbox" name="jenisKelaminMember" value ="1"/>Laki-Laki</label>-->
                     <select required name="jenisKelaminMember">
                         <option value="0">Perempuan</option>
                         <option value="1">Laki-laki</option>

@@ -13,6 +13,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -64,5 +65,5 @@ public class BarangModel implements Serializable {
 
     //Relasi dengan PembelianBarangModel
     @OneToMany(mappedBy = "idBarang", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<PembelianBarangModel> listPembelianBarang;
+    private Set<PembelianBarangModel> setPembelianBarang;
 }

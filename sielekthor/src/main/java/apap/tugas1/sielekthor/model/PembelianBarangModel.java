@@ -39,7 +39,6 @@ public class PembelianBarangModel implements Serializable {
 
     @NotNull
     @Column(nullable = false)
-    //@DateTimeFormat(pattern = "DD/MM/YYYY")
     private Date tanggalGaransiPembelianBarang;
 
     @NotNull

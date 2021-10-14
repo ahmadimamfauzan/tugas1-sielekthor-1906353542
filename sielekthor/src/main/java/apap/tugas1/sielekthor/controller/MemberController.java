@@ -44,4 +44,14 @@ public class MemberController {
         model.addAttribute("namaMember", member.getNamaMember());
         return "tambah-member";
     }
+
+    @GetMapping("member/ubah/{idMember}")
+    public String ubahBarangForm(
+            @PathVariable Long idMember,
+            Model model
+    ) {
+        MemberModel member = memberService.getMemberByIdMember(idMember);
+        model.addAttribute("member", member);
+        return "form-ubah-member";
+    }
 }

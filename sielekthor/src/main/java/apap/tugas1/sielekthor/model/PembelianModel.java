@@ -16,6 +16,7 @@ import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,7 +34,7 @@ public class PembelianModel implements Serializable {
 
     @NotNull
     @Column(nullable = false)
-    //@DateTimeFormat(pattern = "YYYY-MM-DD")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime tanggalPembelian;
 
     @NotNull
@@ -48,7 +49,7 @@ public class PembelianModel implements Serializable {
 
     @NotNull
     @Column(nullable = false)
-    private boolean isCashPembelian;
+    private Boolean isCashPembelian;
 
     //Relasi dengan Member
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
@@ -58,5 +59,9 @@ public class PembelianModel implements Serializable {
 
     //Relasi dengan PembelianBarangModel
     @OneToMany(mappedBy = "idPembelian", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<PembelianBarangModel> listPembelianBarang;
+    private Set<PembelianBarangModel> setPembelianBarang;
+
+    @Column
+    private int jumlahBarangPembelian;
+
 }

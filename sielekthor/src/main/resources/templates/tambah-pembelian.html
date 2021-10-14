@@ -8,13 +8,13 @@
 </head>
 
 <body>
-<nav th:replace="fragments/fragment :: navbar(member)"></nav>
+<nav th:replace="fragments/fragment :: navbar(pembelian)"></nav>
 
 <div class="container">
     <div class="m-4">
-        <h1 th:text="${namaMember} + ' berhasil ditambah.'"></h1>
+        <h1 th:text="'Pembelian dengan nomor invoice ' + ${noInvoicePembelian} + ' berhasil ditambah.'"></h1>
         <br>
-        <a class="btn btn-outline-warning text-warning bg-white" href="/member">Kembali</a>
+        <a class="btn btn-outline-warning text-warning bg-white" href="/pembelian">Kembali</a>
     </div>
 </div>
 
