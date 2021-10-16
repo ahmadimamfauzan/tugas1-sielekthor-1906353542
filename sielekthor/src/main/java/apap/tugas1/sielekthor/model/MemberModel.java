@@ -49,4 +49,17 @@ public class MemberModel implements Serializable {
     //Relasi dengan PembelianModel
     @OneToMany(mappedBy = "idMember", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<PembelianModel> listPembelian;
+
+    // Sort by listPembelian.size()
+    public int compareTo(MemberModel otherMemberModel) {
+        if(this.getListPembelian().size() != otherMemberModel.getListPembelian().size()) {
+            return this.getListPembelian().size() - otherMemberModel.getListPembelian().size();
+        } else {
+            if(this.getNamaMember().compareTo(otherMemberModel.getNamaMember()) < 1) {
+                return 1;
+            } else {
+                return -1;
+            }
+        }
+    }
 }

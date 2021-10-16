@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cari Barang</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar(barang)"></nav>
+
+<div class="container">
+    <br>
+    <h2 class="text-center">Cari Barang</h2>
+    <div class="card m-4 p-4 bg-light mx-auto" style="width: 70rem;">
+        <div class="card-body">
+            <div class="justify-content-center">
+                <form th:action="@{/barang/cari/}" method="GET">
+                    Tipe <br>
+                    <select name="idTipe" required class="form-select custom-select">
+                        <option th:each="tipe : ${listTipe}" th:value="${tipe.idTipe}" th:text="${tipe.namaTipe}">--Pilih Tipe--</option>
+                    </select>
+                    <br><br>
+
+                    Stok <br>
+                    <select name="stokAda" required class="form-select custom-select">
+                        <option th:value="true">Available</option>
+                        <option th:value="false">Sold Out</option>
+                    </select>
+                    <br><br><br>
+
+                    <div class="text-center">
+                        <button class="btn btn-warning btn-lg btn-block" type="submit">Cari</button>
+                        <a class="btn btn-outline-warning bg-white btn-lg btn-block" href="/barang">Kembali</a>
+                    </div>
+
+                </form>
+
+                <div th:if="*{barangSearchList.size() != 0}">
+                    <br>
+                    <hr>
+                    <br>
+                    <h4 style="display:inline;" th:text="'Hasil pencarian barang dengan tipe ' + ${tipeDicari.namaTipe} + ' '"></h4>
+                    <h4 style="display:inline;" th:if="${stokAda} == true">dan stok masih ada.</h4><span></span>
+                    <h4 style="display:inline;" th:if="${stokAda} == false">dan stok sudah habis.</h4>
+                    <br><br>
+                    <form th:action="@{/barang/hapus}" th:object="${barangSearchList}" method="POST">
+                        <table class="table text-center">
+                            <thead class="bg-warning">
+                            <tr>
+                                <th>No.</th>
+                                <th>Nama</th>
+                                <th>Harga</th>
+                                <th>Tipe</th>
+                                <th>Stok</th>
+                                <th>Aksi</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="barang, iterationStatus : ${barangSearchList}"
+                                th:style="${iterationStatus.even ? 'background:white;' : 'background:gainsboro;'}">
+                                <td th:text="${iterationStatus.count}"></td>
+                                <td th:text="${barang.namaBarang}"></td>
+                                <td th:text="'Rp' + ${barang.hargaBarang}"></td>
+                                <td th:text="${barang.tipe.namaTipe}"></td>
+                                <td th:text="${barang.stokBarang}"></td>
+                                <td>
+                                    <a class="btn btn-sm btn-info" th:href="@{/barang/} + ${barang.idBarang}">Lihat</a>
+                                    <a class="btn btn-sm btn-warning text-white" th:href="@{/barang/ubah/} + ${barang.idBarang}">Ubah</a>
+                                    <a class="btn btn-sm btn-danger" th:href="@{/barang/hapus/} + ${barang.idBarang}">Hapus</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+
+                <div th:unless="*{barangSearchList.size() != 0}">
+                    <div th:if="*{sudahCari == true}">
+                        <br>
+                        <hr>
+                        <br>
+                        <h4 style="display:inline;" th:text="'Barang dengan tipe ' + ${tipeDicari.namaTipe} + ' '"></h4>
+                        <h4 style="display:inline;" th:if="${stokAda} == true">dan stok masih ada tidak ditemukan.</h4><span></span>
+                        <h4 style="display:inline;" th:if="${stokAda} == false">dan stok sudah habis tidak ditemukan.</h4>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

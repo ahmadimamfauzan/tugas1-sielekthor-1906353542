@@ -10,9 +10,11 @@ public interface PembelianService {
     void addPembelian(PembelianModel pembelian);
     List<PembelianModel> getPembelianList();
     PembelianModel getPembelianByIdPembelian(Long idPembelian);
-    //void ubahMember(MemberModel barang);
+    void ubahPembelian(PembelianModel pembelian);
     String createNoInvoicePembelian(PembelianModel pembelian);
     int hitungTotalHarga(PembelianModel pembelian);
     LocalDateTime createTanggalPembelian(PembelianModel pembelian);
     int hitungTotalBarang(PembelianModel pembelian);
+    String updateNoInvoicePembelian(String newName, PembelianModel pembelian);
+    void deletePembelian(PembelianModel pembelian);
 }

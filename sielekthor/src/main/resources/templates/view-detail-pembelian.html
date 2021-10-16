@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Barang</title>
+    <title>Pembelian</title>
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
@@ -37,7 +37,6 @@
                 <tr>
                     <td>Tanggal Pembelian</td>
                     <td th:text="':  ' + ${#temporals.format(pembelian.tanggalPembelian, 'EEE, d MMMM yyyy')}"></td>
-<!--                    <td th:text="': ' + ${pembelian.tanggalPembelian}"></td>-->
                 </tr>
                 <tr>
                     <td>Nama Admin</td>
@@ -49,8 +48,10 @@
                     <td th:if="${pembelian.isCashPembelian} == false">:  Cicil</td>
                 </tr>
                 </tbody>
-
             </table>
+            <br>
+
+            <a class="btn btn-sm btn-danger float-right btn-lg" th:href="@{/pembelian/hapus/} + ${pembelian.idPembelian}">Hapus</a>
         </div>
 
     </div>
@@ -79,7 +80,6 @@
                 <td th:text="${pembelianBarang.idBarang.merkBarang}"></td>
                 <td th:text="${pembelianBarang.idBarang.tipe.namaTipe}"></td>
                 <td th:text="${#dates.format(pembelianBarang.tanggalGaransiPembelianBarang, 'EEE, d MMMM yyyy')}"></td>
-<!--                <td th:text="${pembelianBarang.tanggalGaransiPembelianBarang}"></td>-->
                 <td th:text="'Rp' + ${pembelianBarang.idBarang.hargaBarang}"></td>
                 <td th:text="${pembelianBarang.quantityPembelianBarang}"></td>
                 <td th:text="'Rp' + ${pembelianBarang.idBarang.hargaBarang * pembelianBarang.quantityPembelianBarang}"></td>
@@ -88,7 +88,7 @@
     </table>
 
     <br>
-    <a class="btn btn-outline-warning text-warning bg-white" href="/pembelian">Kembali</a>
+    <a class="btn btn-outline-warning bg-white" href="/pembelian">Kembali</a>
 </div>
 
 </body>

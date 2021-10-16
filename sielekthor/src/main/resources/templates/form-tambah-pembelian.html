@@ -15,7 +15,6 @@
     <div class="card m-4 p-4 bg-light mx-auto" style="width: 40rem;">
         <div class="card-body">
             <div class="justify-content-center">
-<!--                <form th:action="@{/pembelian/tambah}" th:object="${pembelian}" method="POST">-->
                 <form th:action="@{/pembelian/tambah}" method="POST" th:object="${pembelianBarangForm}">
 
                     Nama Admin <br>
@@ -43,13 +42,15 @@
                                     Nama Barang
                                     <select name="idBarang" class="form-control" style="width: 16rem;"
                                             th:field="*{pembelianBarangList[__${stat.index}__].idBarang}">
-                                        <option th:each="barang : ${listBarang}" th:value="${barang.idBarang}"
+                                        <option th:each="barang : *{listBarang.subList(listBarang.indexOf(listBarang[__${stat.index}__]), listBarang.size())}"
+                                                th:value="${barang.idBarang}"
                                         th:text="${barang.namaBarang}"></option>
                                     </select>
                                 </td>
                                 <td>
                                     Qty
-                                    <input required min="0" class="form-control" type="number" name="quantityPembelianBarang"
+                                    <input required min="0" th:max="*{listBarang[__${stat.index}__].stokBarang}"
+                                           class="form-control" type="number" name="quantityPembelianBarang"
                                            th:field="*{pembelianBarangList[__${stat.index}__].quantityPembelianBarang}"/>
                                 </td>
                                 <td>

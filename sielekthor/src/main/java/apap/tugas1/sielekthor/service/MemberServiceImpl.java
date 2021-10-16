@@ -39,4 +39,10 @@ public class MemberServiceImpl implements MemberService {
     public void ubahMember(MemberModel member) {
         memberDB.save(member);
     }
+
+    @Override
+    public void sortMemberByListPembelian(List<MemberModel> listAllMember) {
+        QuickSort quickSort = new QuickSort();
+        quickSort.sort(listAllMember, 0, listAllMember.size()-1);
+    }
 }

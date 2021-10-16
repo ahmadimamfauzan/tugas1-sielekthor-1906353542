@@ -44,6 +44,11 @@ public class PembelianServiceImpl implements PembelianService {
     }
 
     @Override
+    public void ubahPembelian(PembelianModel pembelian) {
+        pembelianDB.save(pembelian);
+    }
+
+    @Override
     public String createNoInvoicePembelian(PembelianModel pembelian) {
         // Karakter 1
         String namaMember = pembelian.getIdMember().getNamaMember();
@@ -126,5 +131,24 @@ public class PembelianServiceImpl implements PembelianService {
             count += pembelianBarang.getQuantityPembelianBarang();
         }
         return count;
+    }
+
+    @Override
+    public String updateNoInvoicePembelian(String newName, PembelianModel pembelian) {
+        String oldInvoice = pembelian.getNoInvoicePembelian();
+
+        // Karakter1
+        newName = newName.toLowerCase();
+        char inisial = newName.charAt(0);
+        int karakter1Int = inisial - 'a' + 1;
+        karakter1Int %= 10;
+        String karakter1 = String.valueOf(karakter1Int);
+
+        return karakter1 + oldInvoice.substring(1);
+    }
+
+    @Override
+    public void deletePembelian(PembelianModel pembelian) {
+        pembelianDB.delete(pembelian);
     }
 }

@@ -9,4 +9,5 @@ public interface MemberService {
     List<MemberModel> getMemberList();
     MemberModel getMemberByIdMember(Long idMember);
     void ubahMember(MemberModel barang);
+    void sortMemberByListPembelian(List<MemberModel> listAllMember);
 }

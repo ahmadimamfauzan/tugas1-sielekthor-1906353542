@@ -17,6 +17,7 @@
         <h2 class="text-center">Daftar Barang</h2>
         <br>
         <a class="btn btn-warning font-weight-bold" href="/barang/tambah">+ Tambah Barang</a>
+        <a class="btn btn-warning font-weight-bold" href="/barang/cari">Cari Barang</a>
         <br><br>
         <form th:action="@{/barang/hapus}" th:object="${listBarang}" method="POST">
             <table class="table text-center">
@@ -40,11 +41,7 @@
                         <td th:text="${barang.stokBarang}"></td>
                         <td>
                             <a class="btn btn-sm btn-info" th:href="@{/barang/} + ${barang.idBarang}">Lihat</a>
-
-
                             <a class="btn btn-sm btn-warning text-white" th:href="@{/barang/ubah/} + ${barang.idBarang}">Ubah</a>
-
-
                             <a class="btn btn-sm btn-danger" th:href="@{/barang/hapus/} + ${barang.idBarang}">Hapus</a>
                         </td>
                     </tr>

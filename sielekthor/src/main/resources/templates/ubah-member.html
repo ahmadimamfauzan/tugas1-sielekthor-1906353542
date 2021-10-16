@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" xmlns:th="http://thymeleaf.org">
+    <title>Member</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar(member)"></nav>
+
+<div class="container">
+    <div class="m-4">
+        <br>
+        <h2 class="text-center" th:text="'Data member ' + ${namaMember} + ' berhasil diubah.'"></h2>
+        <br>
+        <h4 class="text-center">Dengan nomor invoice yang baru:</h4>
+        <table class="table text-center" style="margin:auto;width: 24rem;">
+            <thead class="bg-warning">
+                <tr>
+                    <th>No. Invoice Baru</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="pembelian, iterationStatus : ${pembelianByMemberList}"
+                    th:style="${iterationStatus.even ? 'background:white;' : 'background:gainsboro;'}">
+                    <td th:text="*{pembelian.noInvoicePembelian}"></td>
+                </tr>
+            </tbody>
+        </table>
+        <br><br>
+        <div class="text-center">
+            <a class="btn btn-outline-warning text-warning bg-white btn-lg" href="/member">Kembali</a>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

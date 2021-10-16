@@ -16,32 +16,31 @@
     <div class="card m-4 p-4 bg-light mx-auto" style="width: 40rem;">
         <div class="card-body">
             <div class="justify-content-center">
-                <form th:action="@{/member/tambah}" th:object="${member}" method="POST">
+                <form th:action="@{/member/ubah}" th:object="${member}" method="POST">
                     <input type="hidden" th:field="*{idMember}" />
+                    <input type="hidden" th:field="*{jenisKelaminMember}" />
 
                     Nama <br>
                     <input required class="form-control" type="text" name="namaMember" th:value="*{namaMember}"/>
                     <br>
 
                     Tanggal Lahir <br>
-                    <input required class="form-control" type="date" name="tanggalLahirMember" th/>
+                    <input required class="form-control" type="date" name="tanggalLahirMember" th:value="*{tanggalLahirMember}"/>
                     <br>
 
                     Tanggal Pendaftaran <br>
-                    <input required class="form-control" type="datetime-local" name="tanggalPendaftaranMember"/>
+                    <input required class="form-control" type="datetime-local" name="tanggalPendaftaranMember" th:value="*{tanggalPendaftaranMember}"/>
                     <br>
 
                     Jenis Kelamin <br>
-                    <!--                    <label><input required class="form-control" type="checkbox" name="jenisKelaminMember" value ="0"/>Perempuan</label>-->
-                    <!--                    <label><input required class="form-control" type="checkbox" name="jenisKelaminMember" value ="1"/>Laki-Laki</label>-->
-                    <select required name="jenisKelaminMember">
+                    <select disabled required name="jenisKelaminMember" th:value="*{jenisKelaminMember}" th:field="*{jenisKelaminMember}">
                         <option value="0">Perempuan</option>
                         <option value="1">Laki-laki</option>
                     </select>
                     <br><br>
 
                     <button class="btn btn-warning float-right" style="margin-left: 20px;" type="submit">Simpan</button>
-                    <a class="btn btn-outline-warning text-warning float-right bg-white" href="/barang">Batal</a>
+                    <a class="btn btn-outline-warning text-warning float-right bg-white" href="/member">Batal</a>
 
                 </form>
             </div>

@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
@@ -68,12 +65,13 @@ public class PembelianController {
         }
         PembelianBarangForm pembelianBarangForm = new PembelianBarangForm();
         pembelianBarangForm.setPembelianBarangList(wrapperPembelianBarang);
+        pembelianBarangForm.setListBarang(barangModelListStock);
 
         model.addAttribute("pembelianBarangForm", pembelianBarangForm);
         model.addAttribute("pembelian", pembelian);
         model.addAttribute("pembelianBarang", pembelianBarang);
         model.addAttribute("listMember", memberService.getMemberList());
-        model.addAttribute("listBarang", barangModelListStock);
+        //model.addAttribute("listBarang", barangModelListStock);
         return "form-tambah-pembelian";
     }
 
@@ -147,12 +145,89 @@ public class PembelianController {
     ) {
         PembelianModel pembelian = pembelianService.getPembelianByIdPembelian(idPembelian);
 
-        // Total barang pembelian
-        //int jumlahBarangPembelian = pembelianService.hitungTotalBarang(pembelian);
-
         model.addAttribute("pembelian", pembelian);
         model.addAttribute("pembelianBarangSet", pembelian.getSetPembelianBarang());
         model.addAttribute("jumlahBarangPembelian", pembelian.getJumlahBarangPembelian());
         return "view-detail-pembelian";
     }
+
+    @GetMapping("pembelian/hapus/{idPembelian}")
+    public String hapusPembelianForm(
+        @PathVariable Long idPembelian,
+        Model model
+    ) {
+        PembelianModel pembelian = pembelianService.getPembelianByIdPembelian(idPembelian);
+        model.addAttribute("pembelian", pembelian);
+        return "form-hapus-pembelian";
+    }
+
+    @PostMapping("pembelian/hapus")
+    public String hapusPembelianSubmit(
+            @ModelAttribute PembelianModel pembelian,
+            Model model
+    ) {
+        Set<PembelianBarangModel> pembelianBarangModelSet = pembelian.getSetPembelianBarang();
+        List<BarangModel> barangModelList = barangService.getBarangList();
+
+        // Tambah stok
+        List<BarangModel> barangBertambahList = new ArrayList<>();
+        for(BarangModel barang : barangModelList) {
+            for(PembelianBarangModel pembelianBarang : pembelianBarangModelSet) {
+                if(pembelianBarang.getIdBarang().getIdBarang() == barang.getIdBarang()) {
+                    int oldStock = barang.getStokBarang();
+                    Integer qty = pembelianBarang.getQuantityPembelianBarang();
+                    barang.setStokBarang(oldStock + qty);
+                    barangBertambahList.add(barang);
+                    barangService.ubahBarang(barang);
+                }
+            }
+        }
+
+        model.addAttribute("pembelian", pembelian);
+        model.addAttribute("barangBertambahList", barangBertambahList);
+        pembelianService.deletePembelian(pembelian);
+        return "hapus-pembelian";
+    }
+
+
+    @GetMapping("/filter-pembelian")
+    public String cariPembelianForm(Model model) {
+
+        List<PembelianModel> pembelianSearchList = new ArrayList<>();
+
+        model.addAttribute("listMember", memberService.getMemberList());
+        model.addAttribute("pembelianSearchList", pembelianSearchList);
+        model.addAttribute("sudahCari", false);
+        return "cari-pembelian";
+    }
+
+    @GetMapping("filter-pembelian/")
+    public String cariPembelianSubmit(
+            @ModelAttribute MemberModel member,
+            @RequestParam(value="memberForm") Long idMember,
+            @RequestParam(value="apakahCashForm") Boolean apakahCashForm,
+            Model model
+    ) {
+
+        List<PembelianModel> pembelianModelList = pembelianService.getPembelianList();
+        List<PembelianModel> pembelianSearchList = new ArrayList<>();
+
+        MemberModel memberr = memberService.getMemberByIdMember(idMember);
+
+        for(PembelianModel pembelian : pembelianModelList) {
+            if(pembelian.getIdMember().getIdMember() == idMember) {
+                if(pembelian.getIsCashPembelian() == apakahCashForm) {
+                    pembelianSearchList.add(pembelian);
+                }
+            }
+        }
+
+        model.addAttribute("listMember", memberService.getMemberList());
+        model.addAttribute("pembelianSearchList", pembelianSearchList);
+        model.addAttribute("memberForm", memberr);
+        model.addAttribute("apakahCashForm", apakahCashForm);
+        model.addAttribute("sudahCari", true);
+        return "cari-pembelian";
+    }
+
 }

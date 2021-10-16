@@ -18,7 +18,6 @@
         <br>
         <a class="btn btn-warning font-weight-bold" href="/member/tambah">+ Tambah Member</a>
         <br><br>
-<!--        <form th:action="@{/member/hapus}" th:object="${listBarang}" method="POST">-->
             <table class="table text-center">
                 <thead class="bg-warning">
                 <tr>
@@ -36,9 +35,7 @@
                     <td th:text="${iterationStatus.count}"></td>
                     <td th:text="${member.namaMember}"></td>
                     <td th:text="${#dates.format(member.tanggalLahirMember,'d/MM/yyyy')}"></td>
-<!--                    <td th:text="${member.tanggalLahirMember}"></td>-->
                     <td th:text="${#temporals.format(member.tanggalPendaftaranMember, 'yyyy-MM-dd')}"></td>
-<!--                    <td th:text="${member.tanggalPendaftaranMember}"></td>-->
                     <td th:if="${member.jenisKelaminMember} == 0">Perempuan</td>
                     <td th:if="${member.jenisKelaminMember} == 1">Laki-Laki</td>
                     <td>
@@ -47,7 +44,6 @@
                 </tr>
                 </tbody>
             </table>
-<!--        </form>-->
     </div>
 </div>
 

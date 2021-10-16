@@ -39,7 +39,6 @@
                 <td th:text="'Rp' + ${pembelian.totalPembelian}"></td>
                 <td th:text="${pembelian.idMember.namaMember}"></td>
                 <td th:text="${pembelian.jumlahBarangPembelian}"></td>
-<!--                <td th:text="${pembelian.tanggalPembelian}"></td>-->
                 <td th:text="${#temporals.format(pembelian.tanggalPembelian,'d MMMM yyyy')}"></td>
                 <td>
                     <a class="btn btn-sm btn-info" th:href="@{/pembelian/} + ${pembelian.idPembelian}">Lihat</a>
