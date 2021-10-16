@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pembelian</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar(pembelian)"></nav>
+
+<div class="container">
+    <div class="card m-4 p-4 bg-white mx-auto" style="width: 60rem;">
+        <div class="card-header text-center bg-warning">
+            <h2>Detail Pembelian</h2>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <td style="width: 12rem;">No Invoice</td>
+                    <td th:text="':  ' + ${pembelian.noInvoicePembelian}"></td>
+                </tr>
+                <tr>
+                    <td>Total Harga</td>
+                    <td th:text="':  Rp' + ${pembelian.totalPembelian}"></td>
+                </tr>
+                <tr>
+                    <td>Member</td>
+                    <td th:text="':  ' + ${pembelian.idMember.namaMember}"></td>
+                </tr>
+                <tr>
+                    <td>Jumlah Barang</td>
+                    <td th:text="':  ' + ${jumlahBarangPembelian}"></td>
+                </tr>
+                <tr>
+                    <td>Tanggal Pembelian</td>
+                    <td th:text="':  ' + ${#temporals.format(pembelian.tanggalPembelian, 'EEE, d MMMM yyyy')}"></td>
+                </tr>
+                <tr>
+                    <td>Nama Admin</td>
+                    <td th:text="':  ' + ${pembelian.namaAdminPembelian}"></td>
+                </tr>
+                <tr>
+                    <td>Metode Pembayaran</td>
+                    <td th:if="${pembelian.isCashPembelian} == true">:  Tunai</td>
+                    <td th:if="${pembelian.isCashPembelian} == false">:  Cicil</td>
+                </tr>
+                </tbody>
+            </table>
+            <br>
+
+            <a class="btn btn-sm btn-danger float-right btn-lg" th:href="@{/pembelian/hapus/} + ${pembelian.idPembelian}">Hapus</a>
+        </div>
+
+    </div>
+    <br>
+    <div class="text-center">
+        <h2>Daftar Barang</h2>
+    </div>
+    <br>
+    <table class="table text-center" style="width: 60rem;margin:auto;">
+        <thead class="bg-warning">
+            <tr>
+                <th>No.</th>
+                <th>Nama</th>
+                <th>Merk</th>
+                <th>Tipe</th>
+                <th>Tanggal Garansi</th>
+                <th>Harga</th>
+                <th>Qty</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="pembelianBarang, iterationStatus : ${pembelian.getSetPembelianBarang()}">
+                <td th:text="${iterationStatus.count}"></td>
+                <td th:text="${pembelianBarang.idBarang.namaBarang}"></td>
+                <td th:text="${pembelianBarang.idBarang.merkBarang}"></td>
+                <td th:text="${pembelianBarang.idBarang.tipe.namaTipe}"></td>
+                <td th:text="${#dates.format(pembelianBarang.tanggalGaransiPembelianBarang, 'EEE, d MMMM yyyy')}"></td>
+                <td th:text="'Rp' + ${pembelianBarang.idBarang.hargaBarang}"></td>
+                <td th:text="${pembelianBarang.quantityPembelianBarang}"></td>
+                <td th:text="'Rp' + ${pembelianBarang.idBarang.hargaBarang * pembelianBarang.quantityPembelianBarang}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <a class="btn btn-outline-warning bg-white" href="/pembelian">Kembali</a>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Pembelian</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar(pembelian)"></nav>
+<div class="container">
+    <br>
+    <h2 class="text-center">Form Tambah Pembelian</h2>
+    <div class="card m-4 p-4 bg-light mx-auto" style="width: 40rem;">
+        <div class="card-body">
+            <div class="justify-content-center">
+                <form th:action="@{/pembelian/tambah}" method="POST" th:object="${pembelianBarangForm}">
+
+                    Nama Admin <br>
+                    <input required class="form-control" type="text" th:value="${pembelian.namaAdminPembelian}" name="namaAdminPembelian" />
+                    <br>
+
+                    Pembeli <br>
+                    <select name="idMember" th:value="${pembelian.idMember}" class="form-select custom-select" th:field="${pembelian.idMember}">
+                        <option th:each="member : ${listMember}" th:value="${member.idMember}" th:text="${member.namaMember}">--Pilih Member--</option>
+                    </select>
+                    <br><br>
+
+                    Metode Pembayaran <br>
+                    <select required name="isCashPembelian" th:value="${pembelian.isCashPembelian}" class="form-select custom-select">
+                        <option value="true" label="Tunai">
+                        <option value="false" label="Cicil">
+                    </select>
+                    <br><br>
+
+                    <h5>Daftar Barang</h5>
+                    <table class="table" id="myTableID">
+                        <tbody>
+                            <tr class="element" th:each="currentPembelianBarang, stat : *{pembelianBarangList}">
+                                <td>
+                                    Nama Barang
+                                    <select name="idBarang" class="form-control" style="width: 16rem;"
+                                            th:field="*{pembelianBarangList[__${stat.index}__].idBarang}">
+                                        <option th:each="barang : *{listBarang.subList(listBarang.indexOf(listBarang[__${stat.index}__]), listBarang.size())}"
+                                                th:value="${barang.idBarang}"
+                                        th:text="${barang.namaBarang}"></option>
+                                    </select>
+                                </td>
+                                <td>
+                                    Qty
+                                    <input required min="0" th:max="*{listBarang[__${stat.index}__].stokBarang}"
+                                           class="form-control" type="number" name="quantityPembelianBarang"
+                                           th:field="*{pembelianBarangList[__${stat.index}__].quantityPembelianBarang}"/>
+                                </td>
+                                <td>
+                                    <br>
+                                    <button id="remove_1" type="button" onclick="SomeDeleteRowFunction(this)" class="btn btn-danger remove">Hapus</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <br>
+                    <div>
+                        <button class="btn btn-primary add-row" type="button">Tambah Row</button>
+                    </div>
+                    <br><hr>
+                    <div class="align-content-center text-center span2">
+                        <button class="btn btn-block btn-warning text-white text-center btn-lg" type="submit">Simpan</button>
+                        <a class="btn btn-block btn-outline-warning text-center bg-white btn-lg" href="/barang">Batal</a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const baris = $("table tbody").html();
+    var rowCount = document.getElementById('myTableID').rows.length;
+    $(document).ready(function () {
+        $(".add-row").click(function () {
+            $(".element:last").after(baris);
+        });
+    });
+    function SomeDeleteRowFunction(btndel) {
+        if (typeof(btndel) == "object") {
+            $(btndel).closest("tr").remove();
+        } else {
+            return false;
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Pembelian</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar(pembelian)"></nav>
+
+<div class="container text-center">
+    <div class="m-4">
+        <div class="card-body">
+            <div class="justify-content-center">
+                <br>
+                <h2 class="text-center">Hapus Pembelian</h2>
+                <br>
+                <h4 class="text-center" th:text="'Yakin menghapus pembelian dengan nomor invoice ' + ${pembelian.noInvoicePembelian} + '?'"></h4>
+                <form th:action="@{/pembelian/hapus}" th:object="${pembelian}" method="POST">
+                    <input type="hidden" th:field="*{idPembelian}"/>
+                    <input type="hidden" th:field="*{totalPembelian}"/>
+                    <input type="hidden" th:field="*{tanggalPembelian}"/>
+                    <input type="hidden" th:field="*{namaAdminPembelian}"/>
+                    <input type="hidden" th:field="*{noInvoicePembelian}"/>
+                    <input type="hidden" th:field="*{isCashPembelian}"/>
+                    <input type="hidden" th:field="*{idMember}"/>
+                    <input type="hidden" th:field="*{setPembelianBarang}"/>
+                    <input type="hidden" th:field="*{jumlahBarangPembelian}"/>
+                    <br>
+                    <div class="text-center">
+                        <a class="btn btn-primary text-white" style="width: 5rem;" th:href="@{/pembelian}">Tidak</a>
+                        <button class="btn btn-danger" style="width: 5rem;" type="submit">Ya</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

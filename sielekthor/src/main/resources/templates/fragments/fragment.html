@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <head th:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    </head>
+</head>
+<head th:fragment="js">
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            ntegrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFIBw8HfCJo="
+            crossorigin="anonymous"
+    ></script>
+    <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/popper.min.js"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+
+<body>
+<nav th:fragment="navbar(params)" class="navbar navbar-expand-lg navbar-light bg-warning">
+    <a class="navbar-brand font-weight-bold text-white" href="/">SIELEKTHOR</a>
+    <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+    >
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item"><a class="nav-link font-weight-bold" th:classappend="${params=='barang'} ? 'active'" th:href="@{/barang}">
+                Barang<span class="sr-only"></span>
+            </a></li>
+            <li class="nav-item"><a class="nav-link font-weight-bold" th:classappend="${params=='pembelian'} ? 'active'" th:href="@{/pembelian}">
+                Pembelian<span class="sr-only"></span>
+            </a></li>
+            <li class="nav-item"><a class="nav-link font-weight-bold" th:classappend="${params=='filter-pembelian'} ? 'active'" th:href="@{/filter-pembelian}">
+                Filter Pembelian<span class="sr-only"></span>
+            </a></li>
+            <li class="nav-item"><a class="nav-link font-weight-bold" th:classappend="${params=='member'} ? 'active'" th:href="@{/member}">
+                Member<span class="sr-only"></span>
+            </a></li>
+            <li class="nav-item"><a class="nav-link font-weight-bold" th:classappend="${params=='bonus'} ? 'active'" th:href="@{/bonus/cari/member/paling-banyak}">
+                Bonus<span class="sr-only"></span>
+            </a></li>
+        </ul>
+    </div>
+</nav>
+</body>
+
+</html>

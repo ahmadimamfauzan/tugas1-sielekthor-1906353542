@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>500 Error on the Server</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar(500error)"></nav>
+
+<div class="container">
+  <div class="m-4">
+    <br><br>
+    <h1 th:text="'Error pada server'" class="text-center"></h1>
+    <br>
+    <div class="text-center">
+      <a class="btn btn-warning btn-lg" href="/">Kembali</a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
